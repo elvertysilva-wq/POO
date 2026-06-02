@@ -45,13 +45,63 @@ class Boleto:
     def get_valor_pago(self): return self.__valor_pago
     def get_situacao_pagamento(self): return self.__situacao_pagamento
     # no diagrama get_situacao_pagamento está como situacao
-    def situacao(self):
-        def __str__(self):
-            s = f"Boleto: {self.__cod_barras} - Emissão: {self.__data_emissao.strftime('%d/%m/%Y')}"
-            s += f"Vencimento: {self.__data_vencimento.strftime('%d/%m/%Y')}"
-            s += f"Valor Pago R$: {self.__valor_pago:.2f}"
-            s += f"Pagamento: {self.__data_pagamento}"
-            s += f"{self.__situacao_pagamento}"
-            return s
+    def situacao(self): return self.__situacao_pagamento
+    def __str__(self):
+        s = f"Boleto: {self.__cod_barras} - Emissão: {self.__data_emissao.strftime('%d/%m/%Y')}"
+        s += f"Vencimento: {self.__data_vencimento.strftime('%d/%m/%Y')}"
+        s += f"Valor Pago R$: {self.__valor_pago:.2f}"
+        s += f"Pagamento: {self.__data_pagamento}"
+        s += f"{self.__situacao_pagamento}"
+        return s
+
+class BoletoUI:
+    __boletos = []
+    @staticmethod
+    def main():
+        op = 0
+        while op != 10:
+            op = BoletoUI.menu()
+            if op == 1: BoletoUI.inserir()
+            if op == 2: BoletoUI.listar()
+            if op == 3: BoletoUI.atualizar()
+            if op == 4: BoletoUI.excluir()
+            if op == 5: BoletoUI.abertos()
+            if op == 6: BoletoUI.pagos()
+            if op == 7: BoletoUI.a_vencer()
+            if op == 8: BoletoUI.vencidos()
+            if op == 9: BoletoUI.pagar()
+
+    @staticmethod
+    def menu():
+        print("----------------------------------------       ")
+        print(" 1 - Inserir, 2-Listar, 3-Atualizar, 4-Excluir ")
+        print(" 5-Boletos em aberto,   6-Boletos pagos          ")
+        print(" 7-Boletos a vencer,    8-Boletos Vencidos        ")
+        print(" 9-Pagar boleto,        10-Fim                    ")
+        return int(input("Escolha uma opção: "))
+    
+    @classmethod
+    
+    @classmethod
+    def inserir(cls):
+        cod = input("Informe o código com 10 dígitos: ")
+        emissao = datetime.strptime(input("Informe a data de emissão dd/mm/yyyy: "), "%d/%m/%Y")
+        venc = datetime.strptime(input("Informe a data de vencimento dd/mm/yyyy: "), "%d/%m/%Y")
+        valor = float(input("Informe o valor: "))
+        x = Boleto(cod, emissao, venc, valor)
+        cls.__boletos.append(x)
+    @classmethod
+    def listar(cls):
+        for x in cls.__boletos: print(x)
+    @classmethod
+    def vencidos(cls):
+        for x in cls.__boletos:
+            if x.get_situacao_pagamento() == Pagamento.EM_ABERTO and \
+                 x.get_data_vencimento() < datetime.now(): print(x)
+
+BoletoUI.main()
+     
+    
+
 
     
