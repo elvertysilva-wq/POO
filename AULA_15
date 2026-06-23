@@ -1,0 +1,25 @@
+class Cliente:
+    def __init__(self, id, nome):
+        self.id = id
+        self.nome = nome
+    def __str__(self):
+        return f"{self.id} - {self.nome}"
+    def to_json(self):
+        return {"id" : self.id, "nome" : self.nome}
+    @staticmethod
+    def from_json(dic):
+        return Cliente(dic["id"], dic["nome"])  
+
+def salvar():
+    a = Cliente(1, "Duglas Cracudo") #chamando o init
+    b = Cliente(2, "Jon Bosak")
+    c = Cliente.from_json({ "id" : 3, "nome" : "Alan Turing"}) #chamando o from_json
+    lista = [a, b, c]
+    arquivo = open("cliente.json", mode = "w")' '
+
+    print(a)
+    print(b)
+    print(c)
+    print(b.__dict__)
+    print(vars(b))
+    print(c.to_json())
