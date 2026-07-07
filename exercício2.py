@@ -46,5 +46,5 @@ class PaisUI:
         p = int(input("Informe a população: "))
         a = float(input("Informe a área (km²): "))
         x = Pais(n, p, a)
-        print(x)
+         print(x)
 PaisUI.main()
